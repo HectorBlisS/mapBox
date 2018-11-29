@@ -104,19 +104,19 @@ var map = new mapboxgl.Map({
 
 Notice that we need to replace `YOUR-API-KEY` from `mapboxgl.accessToken` with the key you got in the section above.
 
-![:bulb:](http://materials.ironhack.com/build/emojify.js/dist/images/basic/bulb.png ":bulb:") If instead of a map you see a grey block, it probably means that you have a problem with your API key. Make sure you enabled "Maps JavaScript API" from your [Dashboard](https://console.cloud.google.com/apis/dashboard). If you see nothing, it's probably because you didn't give a `height` property for your `#map`. Take a look at the HTML part of the code and you will notice that we have some embedded CSS in the <head> part.
+![:bulb:](http://materials.ironhack.com/build/emojify.js/dist/images/basic/bulb.png ":bulb:") If instead of a map you see a error message in the console, it probably means that you have a problem with your API key. Make sure the API key you've used is the same from your [Dashboard](https://www.mapbox.com/account/). If you see nothing, it's probably because you didn't give a `height` property for your `#map`. Take a look at the HTML part of the code and you will notice that we have some embedded CSS in the <head> part.
 
 Basically, we are on top of two things here:
 
-1.  Create an object with [latitude](https://en.wikipedia.org/wiki/Latitude) and [longitude](https://en.wikipedia.org/wiki/Longitude) to point the map to a specific place (in our case IronhackBCN);
+1.  Create an instance of a `Map` which receives four parameters: the first one is the container (`document.getElementById('map')`) wich only needs the id value not the selector, the second is stylesheet by default, we can let it like that. Next we have two more options - the position to center the map and the zoom level (if the center is present the zoom must be too).
 
-2.  Create an instance of a `Map` which receives two parameters: the first one is the container (`document.getElementById('map')`), and the second is an object of options, we can call it like that. In this case we have two options - the zoom level and the position to center the map.
+2.  Set an array with [latitude](https://en.wikipedia.org/wiki/Latitude) and [longitude](https://en.wikipedia.org/wiki/Longitude) to point the map to a specific place to center it, with the key "center" (in our case IronhackMEX);
 
-![:bulb:](http://materials.ironhack.com/build/emojify.js/dist/images/basic/bulb.png ":bulb:") Check other parameters that you can pass. [(https://developers.google.com/maps/documentation/javascript/reference#MapOptions)](https://developers.google.com/maps/documentation/javascript/reference#MapOptions)
+![:bulb:](http://materials.ironhack.com/build/emojify.js/dist/images/basic/bulb.png ":bulb:") Check other parameters that you can pass. [(https://www.mapbox.com/mapbox-gl-js/api/)](https://www.mapbox.com/mapbox-gl-js/api/)
 
 Cool 😎 Isn't it? But this is too simple. Let's add some functionality!
 
-## [](http://materials.ironhack.com/s/rJCE0nGTNN7#adding-markers "adding-markers")Adding Markers
+## Adding Markers
 
 Showing only a map is boring. Google Maps API has a built in functionality to add markers in your map.
 
