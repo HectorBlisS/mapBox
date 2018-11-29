@@ -161,7 +161,7 @@ const marker = new mapboxgl.Marker()
 ```
 Make sure to zoom out to see the animation, Hey! our marker isn't boring anymore!
 
-![Imgur](https://i.imgur.com/IDZckSo.gifv)
+![Imgur](https://i.imgur.com/IDZckSo.gif)
 
 ## Using Browser location
 
