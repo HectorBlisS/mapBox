@@ -35,31 +35,31 @@ The steps might change in the future and sometimes this process can be different
 
 ![Imgur](https://i.imgur.com/EjjI08a.jpg)
 
-1.  You must create an account completing the form.
+3.  You must create an account completing the form.
 
 ![](https://i.imgur.com/uLmgJdb.png)
 
-1.  Once in your dashboard, you already have a token in the Access tokens section, copy it.
+4.  Once in your dashboard, you already have a token in the Access tokens section, copy it.
 
 ![Imgur](https://i.imgur.com/kVwWXj4.png)
 
-1.  You will need to Enable billing for this project.
+5. After this, you are all set and you should have access to your API key, do not forget to copy the Mapbox CDN scripts from the SDK for Web (js).
 
-![](https://i.imgur.com/RPCBY0O.png)
+![Imgur](https://i.imgur.com/3Z3f6Lc.png)
 
-1.  If it's the first time you come here, you will probably need to give your credit card information. Don't worry, Google will not charge you anything and you will have to explicitly tell Google to charge you when you reach your quota.
+### Get the script tags of the Mapbox CDN
 
-![](https://i.imgur.com/UJzdDOD.png)
+To retrieve the Mapbox official library, you need to use the CDN, this is the fastest way. Use this tags inside the `<head></head>` tag.
 
-1.  After this, you are all set and you should have access to your API key.
+```html
+<script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+<link
+  href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css"
+  rel="stylesheet"
+/>
+```
 
-![](https://i.imgur.com/bBcXMjO.png)
-
-### [](http://materials.ironhack.com/s/rJCE0nGTNN7#retrieve-a-former-api-key "retrieve-a-former-api-key")Retrieve a former API key
-
-To retrieve a former API key, the fastest way is to go to <https://console.cloud.google.com/apis/credentials> and potentially change your project name.
-
-## [](http://materials.ironhack.com/s/rJCE0nGTNN7#create-a-map "create-a-map")Create a map
+## Create a map
 
 To create our first map we need two files, the `HTML` and the `JavaScript`.
 
@@ -81,36 +81,28 @@ In the `HTML` we will render our map and for that we need a container `div` 
   </head>
   <body>
     <h3>My First Map</h3>
-    <div id="map"></div>
+    <div id="map" style="width:400px;height:300px" ></div>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR-API-KEY"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
     <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
 
 ```
 
-Notice that we need to replace `YOUR-API-KEY` from `<script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR-API-KEY"></script>` with the key you got in the section above.
+And in our `main.js` we write the next code:
 
-```
+```javascript
 // main.js
 
-function startMap() {
-  const ironhackBCN = {
-  	lat: 41.3977381,
-  	lng: 2.190471916};
-  const map = new google.maps.Map(
-    document.getElementById('map'),
-    {
-      zoom: 5,
-      center: ironhackBCN
-    }
-  );
-}
-
-startMap();
-
+mapboxgl.accessToken = "<YOUR-API-KEY>";
+var map = new mapboxgl.Map({
+  container: "map",
+  style: "mapbox://styles/mapbox/streets-v10"
+});
 ```
+
+Notice that we need to replace `YOUR-API-KEY` from `mapboxgl.accessToken` with the key you got in the section above.
 
 ![:bulb:](http://materials.ironhack.com/build/emojify.js/dist/images/basic/bulb.png ":bulb:") If instead of a map you see a grey block, it probably means that you have a problem with your API key. Make sure you enabled "Maps JavaScript API" from your [Dashboard](https://console.cloud.google.com/apis/dashboard). If you see nothing, it's probably because you didn't give a `height` property for your `#map`. Take a look at the HTML part of the code and you will notice that we have some embedded CSS in the <head> part.
 
