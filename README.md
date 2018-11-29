@@ -15,33 +15,33 @@ In this lesson you will learn:
 
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_30a0611f30853bf6c769b4bbd24bd2a6.png)
 
-Google Maps is a service developed by Google in February 2005. What does it do? Well... it seems obvious when is called Google Maps!
+Mapbox is a service of location data with features like maps, search and navigation. What does it do? Well... it seems obvious when is called Mapbox
 
 Inside Google Maps API we can find different services like Directions, Geocoding, ReverseGeocoding, Elevation and StreetView.
 
-Google Maps provides the same API for different platforms and technologies like iOS, Android, Web and Web Services.
+Mapbox provides the same API for different platforms and technologies like iOS, Android, Web and Web Services.
 
-In the beginning, Google Maps was free to use but now they have [different plans](https://developers.google.com/maps/pricing-and-plans/) based on the number of requests your app is getting (how many users visits your app in average).
+Mapbox is free to use with certain cuota and they have [different plans](https://www.mapbox.com/pricing/) based on the number of requests your app is getting (how many users visits your app in average).
 
-## [](http://materials.ironhack.com/s/rJCE0nGTNN7#get-a-google-api-key "get-a-google-api-key")Get a Google API key?
+## Get a Mapbox API key?
 
-Google updated its pricing plan in the summer of 2018 and now we will go together through the steps to get the API key. The steps might change in the future and sometimes this process can be buggy on the Google's website, so don't hesitate to try again the same steps if something bad happens in one of the steps. In your career, you will see this kind of situations fairly often since these are all part of the development process of any product.
+The steps might change in the future and sometimes this process can be different, so don't hesitate to try again the same steps if something bad happens in one of the steps. In your career, you will see this kind of situations fairly often since these are all part of the development process of any product.
 
-### [](http://materials.ironhack.com/s/rJCE0nGTNN7#steps-to-get-an-api-key-for-the-first-time "steps-to-get-an-api-key-for-the-first-time")Steps to get an API key for the first time
+### Steps to get an API key for the first time
 
-1.  Go to <https://cloud.google.com/maps-platform/>
+1.  Go to <https://www.mapbox.com/>
 
-2.  Click on the button "Get Started" on the top right of the page.
+2.  Click on the button "Start building" on the cover's call to action button of the page.
 
-![](https://i.imgur.com/quJvDk5.png)
+![](https://imgur.com/a/Ev4wrtY)
 
-1.  You can enable all different services and click on "Continue".
+1.  You must create an account completing the form.
 
-![](https://i.imgur.com/YgF0PIi.png)
+![](https://imgur.com/a/mu6yQcH)
 
-1.  You can select a former project or create a new one.
+1.  Once in your dashboard, you already have a token in the Access tokens section, copy it.
 
-![](https://i.imgur.com/ZLDzdB0.png)
+![](https://imgur.com/a/wYeXoBi)
 
 1.  You will need to Enable billing for this project.
 
