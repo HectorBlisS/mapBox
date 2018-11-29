@@ -33,15 +33,15 @@ The steps might change in the future and sometimes this process can be different
 
 2.  Click on the button "Start building" on the cover's call to action button of the page.
 
-[Imgur](https://i.imgur.com/EjjI08a.jpg)
+![Imgur](https://i.imgur.com/EjjI08a.jpg)
 
 1.  You must create an account completing the form.
 
-[](https://i.imgur.com/uLmgJdb.png)
+![](https://i.imgur.com/uLmgJdb.png)
 
 1.  Once in your dashboard, you already have a token in the Access tokens section, copy it.
 
-[Imgur](https://i.imgur.com/kVwWXj4.png)
+![Imgur](https://i.imgur.com/kVwWXj4.png)
 
 1.  You will need to Enable billing for this project.
 
