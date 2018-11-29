@@ -1,6 +1,6 @@
 ![](https://i.imgur.com/1QgrNNw.png)
 
-# [](http://materials.ironhack.com/s/rJCE0nGTNN7#google-maps--geolocation "google-maps--geolocation")Google Maps | Geolocation
+# [](http://materials.ironhack.com/s/rJCE0nGTNN7#google-maps--geolocation "google-maps--geolocation")Mapbox | Geolocation
 
 ## [](http://materials.ironhack.com/s/rJCE0nGTNN7#learning-goals "learning-goals")Learning Goals
 
@@ -9,17 +9,17 @@ In this lesson you will learn:
 - How to set up an API key
 - How to embed a map in HTML
 - How to show markers in our map
-- How to create a route between two markers
+- How to create a route between two points
 
 ## [](http://materials.ironhack.com/s/rJCE0nGTNN7#introduction "introduction")Introduction
 
-![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_30a0611f30853bf6c769b4bbd24bd2a6.png)
+![Imgur](https://i.imgur.com/L3SNDaA.jpg)
 
-Mapbox is a service of location data with features like maps, search and navigation. What does it do? Well... it seems obvious when is called Mapbox
+Mapbox is a service of location data with features like maps, search and navigation. What does it do? Well... it seems obvious when is called Mapbox.
 
-Inside Google Maps API we can find different services like Directions, Geocoding, ReverseGeocoding, Elevation and StreetView.
+Inside Mapbox API we can find different services like Navigation, Geocoding and GeoJSONSource.
 
-Mapbox provides the same API for different platforms and technologies like iOS, Android, Web and Web Services.
+Mapbox provides the same API for different platforms and technologies like iOS, Android, React Native, Unity and Web Services.
 
 Mapbox is free to use with certain cuota and they have [different plans](https://www.mapbox.com/pricing/) based on the number of requests your app is getting (how many users visits your app in average).
 
@@ -179,7 +179,7 @@ if (navigator.geolocation) {
   // Get current position
   // The permissions dialog will pop up
   navigator.geolocation.getCurrentPosition(function (position) {
-    // Create an object to match Google's Lat-Lng object format
+    // Create an object to match Mapbox's Lat-Lng array format
     const center = [
       position.coords.longitude,
       position.coords.latitude,
