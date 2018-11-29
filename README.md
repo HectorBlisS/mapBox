@@ -161,6 +161,8 @@ const marker = new mapboxgl.Marker()
 ```
 Make sure to zoom out to see the animation, Hey! our marker isn't boring anymore!
 
+![Imgur](https://i.imgur.com/IDZckSo.gifv)
+
 ## Using Browser location
 
 How about we take the position from the browser? Since HTML5, we have a set of Web APIs we can use in modern browsers.
