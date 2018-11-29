@@ -65,29 +65,31 @@ To create our first map we need two files, the `HTML` and the `JavaScript`.
 
 In the `HTML` we will render our map and for that we need a container `div` to embed it.
 
-```
+```html
 <!-- index.html -->
 
 <!DOCTYPE html>
 <html>
   <head>
     <title>My First Map</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
     <style>
-       #map {
+      #map {
         height: 500px;
         width: 100%;
-       }
+      }
     </style>
   </head>
   <body>
     <h3>My First Map</h3>
-    <div id="map" style="width:400px;height:300px" ></div>
-
-    <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+    <div id="map" style="width:400px;height:300px"></div>
     <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
-
 ```
 
 And in our `main.js` we write the next code:
@@ -96,9 +98,11 @@ And in our `main.js` we write the next code:
 // main.js
 
 mapboxgl.accessToken = "<YOUR-API-KEY>";
-var map = new mapboxgl.Map({
+const map = new mapboxgl.Map({
   container: "map",
-  style: "mapbox://styles/mapbox/streets-v10"
+  style: "mapbox://styles/mapbox/streets-v10",
+  center: [-99.1711, 19.399],
+  zoom: 15
 });
 ```
 
@@ -110,7 +114,7 @@ Basically, we are on top of two things here:
 
 1.  Create an instance of a `Map` which receives four parameters: the first one is the container (`document.getElementById('map')`) wich only needs the id value not the selector, the second is stylesheet by default, we can let it like that. Next we have two more options - the position to center the map and the zoom level (if the center is present the zoom must be too).
 
-2.  Set an array with [latitude](https://en.wikipedia.org/wiki/Latitude) and [longitude](https://en.wikipedia.org/wiki/Longitude) to point the map to a specific place to center it, with the key "center" (in our case IronhackMEX);
+2.  Set an array with [latitude](https://en.wikipedia.org/wiki/Latitude) and [longitude](https://en.wikipedia.org/wiki/Longitude) to point the map to a specific place to center it, with the key "center" (in our case IronhackMEX)
 
 ![:bulb:](http://materials.ironhack.com/build/emojify.js/dist/images/basic/bulb.png ":bulb:") Check other parameters that you can pass. [(https://www.mapbox.com/mapbox-gl-js/api/)](https://www.mapbox.com/mapbox-gl-js/api/)
 
@@ -118,33 +122,46 @@ Cool 😎 Isn't it? But this is too simple. Let's add some functionality!
 
 ## Adding Markers
 
-Showing only a map is boring. Google Maps API has a built in functionality to add markers in your map.
+Showing only a map is boring. Mapbox API has a built in functionality to add markers in your map.
 
-![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_b4bacbf8c4a457bb4459e70599eb6738.png)
+![Imgur](https://i.imgur.com/XvyUJmW.png)
 
-To place a marker we need to create an instance of `google.maps.Marker`
+To place a marker we need to create an instance of `mapboxgl.Marker()` and add it to the map passing it into the method `addTo`
 
-```
-const myMarker = new google.maps.Marker({
-  position: {
-  	lat: 41.3977381,
-  	lng: 2.190471916
-  },
-  map: map,
-  title: "I'm here"
-});
-
+```javascript
+const marker = new mapboxgl.Marker()
+    .setLngLat([-99.1711, 19.399])
+    .addTo(map);
 ```
 
 The basic options that you can pass:
 
-- position is an object with latitude and longitude;
+- position is an array with latitude and longitude inside the method `setLngLat`
 - map is the variable that references the instance of our map;
-- title is a string that will be displayed when we roll over the marker with the mouse.
+- we can pass another config to the marker inside the constructor with an object like this: `{color:"red",draggable:true}`.
 
-Take a look [MarkerOptions object specification](https://developers.google.com/maps/documentation/javascript/3.exp/reference#Marker) for more options.
+Take a look [MarkerOptions object specification](https://www.mapbox.com/mapbox-gl-js/api#marker) for more options.
 
-## [](http://materials.ironhack.com/s/rJCE0nGTNN7#using-browser-location "using-browser-location")Using Browser location
+Even we can animate our marker:
+
+```javascript
+const marker = new mapboxgl.Marker()
+
+  function changeMarker(){
+    const time = Date.now()
+    const radius = 20
+    marker.setLngLat([
+        -99 + Math.sin(time/10000 * radius),
+        19 + Math.cos(time/10000 * radius)
+    ]);
+    marker.addTo(map);
+  }
+
+  setInterval(changeMarker,1000/60)
+```
+Make sure to zoom out to see the animation, Hey! our marker isn't boring anymore!
+
+## Using Browser location
 
 How about we take the position from the browser? Since HTML5, we have a set of Web APIs we can use in modern browsers.
 
@@ -152,7 +169,7 @@ Normally all browser have an object [navigator](https://developer.mozilla.org/e
 
 `geolocation` allows accessing to the latitude and longitude coordinates of the browser - *if the user gives us permissions*.
 
-```
+```javascript
 ...
 // Try to get a geolocation object from the web browser
 if (navigator.geolocation) {
@@ -161,10 +178,10 @@ if (navigator.geolocation) {
   // The permissions dialog will pop up
   navigator.geolocation.getCurrentPosition(function (position) {
     // Create an object to match Google's Lat-Lng object format
-    const center = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude
-    };
+    const center = [
+      position.coords.longitude,
+      position.coords.latitude,
+    ];
     console.log('center: ', center)
     // User granted permission
     // Center the map in the position we got
@@ -180,61 +197,52 @@ if (navigator.geolocation) {
 
 ```
 
-```
+```javascript
 // the result of the console.log()
 center:
-  {
-    lat: 41.39780037511012,
-    lng: 2.1905911449111493
-  }
+  [
+    -99.1711, 
+    19.3990 
+  ]
 
 ```
 
 Now let's add a marker with our current position and center the map in the marker. Also, we are going to put a marker in Ironhack Barcelona Campus!
 
-```
+```javascript
 function startMap() {
 
   // Store Ironhack's coordinates
-  const ironhackBCN = { lat: 41.3977381,  lng: 2.190471916 };
+  const ironhackMEX = [ -99.1711, 19.3990 ];
 
   // Initialize the map
-  const map = new google.maps.Map(document.getElementById('map'),
-    {
-      zoom: 5,
-      center: ironhackBCN
-    }
-  );
+ mapboxgl.accessToken = "<YOUR-API-KEY>";
+const map = new mapboxgl.Map({
+  container: "map",
+  style: "mapbox://styles/mapbox/streets-v10",
+  center: ironhackMEX,
+  zoom: 15
+});
 
-  // Add a marker for Ironhack Barcelona
-  const IronhackBCNMarker = new google.maps.Marker({
-    position: {
-      lat: ironhackBCN.lat,
-      lng: ironhackBCN.lng
-    },
-    map: map,
-    title: "Barcelona Campus"
-  });
+  // Add a marker for Ironhack México
+  const IronhackMEXMarker = new mapboxgl.Marker()
+    .setLngLat(ironhackMEX)
+    .addTo(map);
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
-      const user_location = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude
-      };
+      const user_location = [
+        position.coords.longitude,
+        position.coords.latitude
+      ];
 
       // Center map with user location
       map.setCenter(user_location);
 
       // Add a marker for your user location
-      const ironhackBCNMarker = new google.maps.Marker({
-        position: {
-          lat: user_location.lat,
-          lng: user_location.lng
-        },
-        map: map,
-        title: "You are here."
-      });
+      const userLocationMarker = new mapboxgl.Marker({color:"red"})
+    .setLngLat(user_location)
+    .addTo(map);
 
     }, function () {
       console.log('Error in the geolocation service.');
@@ -248,65 +256,52 @@ startMap();
 
 ```
 
-## [](http://materials.ironhack.com/s/rJCE0nGTNN7#drawing-a-route-between-two-pins "drawing-a-route-between-two-pins")Drawing a route between two pins
+## Drawing a route between two pins
 
-![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_3c015b6b5f72af723673b90693f04280.png)
+![Imgur](https://i.imgur.com/9uBhP6f.jpg)
 
-If we want to draw routes between two pins we have to instantiate [DirectionService](https://developers.google.com/maps/documentation/javascript/directions) and `DirectionRenderer` objects.
+If we want to draw routes between two pins we have to add this piece of code at the end, and set the corresponding libraries links in the `head` tag.
 
-```
-const directionsService = new google.maps.DirectionsService;
-const directionsDisplay = new google.maps.DirectionsRenderer;
-
-```
-
-To specify the route that we want to do, we will make a request using the method `route()`.
-
-```
-const directionRequest = {
-  origin: { lat: 41.3977381, lng: 2.190471916},
-  destination: 'Madrid, ES',
-  travelMode: 'DRIVING'
-};
-
-directionsService.route(
-  directionRequest,
-  function(response, status) {
-    if (status === 'OK') {
-      // everything is ok
-      directionsDisplay.setDirections(response);
-
-    } else {
-      // something went wrong
-      window.alert('Directions request failed due to ' + status);
-    }
-  }
-);
-
-directionsDisplay.setMap(map);
+```javascript
+map.addControl(new MapboxDirections({
+    accessToken: mapboxgl.accessToken
+}), 'top-left');
 
 ```
 
-`directionsService.route(<optionsObject>, <callback>)` has two parameters: an object with options and callback.
+To specify the route that we want to do, we just have to use the input boxes provided from the map.
 
-The options can be:
+Do not forget to import the apropiate stylesheet and JavaScript library at the `<head></head>` tag:
 
-| Field         | Description                                              |
-| ------------- | -------------------------------------------------------- |
-| `origin`      | `string`, `google.maps.Place`, `LatLng`                  |
-| `destination` | `string`, `google.maps.Place`, `LatLng`                  |
-| `travelMode`  | `string` as `DRIVING`, `BICYCLING`, `TRANSIT`, `WALKING` |
+```html
+  <head>
+    <title>My First Map</title>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.js'></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.css' type='text/css' />
+    <style>
+      #map {
+        height: 500px;
+        width: 100%;
+      }
+    </style>
+  </head>
 
-You can check [directionRequest documentation](https://developers.google.com/maps/documentation/javascript/directions#DirectionsRequests)
 
-## [](http://materials.ironhack.com/s/rJCE0nGTNN7#summary "summary")Summary
+```
 
-In this lesson you learned how to use the basic things with Google Maps API. You successfully created a map, learned how to create a pin and how to draw a route between two pins.
+## Summary
 
-## [](http://materials.ironhack.com/s/rJCE0nGTNN7#extra-resources "extra-resources")Extra Resources
+In this lesson you learned how to use the basic things with Mapbox API. You successfully created a map, learned how to create a pin and how to draw a route between two pins.
 
-[Google Maps JavaScript Documentation](https://developers.google.com/maps/documentation/javascript/tutorial)
+## Extra Resources
 
-[Google Maps Examples](https://developers.google.com/maps/documentation/javascript/examples/)
+[Mapbox JavaScript Documentation](https://www.mapbox.com/mapbox-gl-js/api)
 
-[Place Autocomplete and Directions](https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-directions)
+[Mapbox Examples](https://www.mapbox.com/mapbox-gl-js/example/simple-map/)
+
+[Mapbox Plugins](https://www.mapbox.com/mapbox-gl-js/plugins)
