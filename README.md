@@ -49,14 +49,11 @@ The steps might change in the future and sometimes this process can be different
 
 ### Get the script tags of the Mapbox CDN
 
-To retrieve the Mapbox official library, you need to use the CDN, this is the fastest way. Use this tags inside the `<head></head>` tag.
+To retrieve the Mapbox official library, you need to use the CDN, this is the fastest way. Use this tags inside the `<head>` tag.
 
 ```html
 <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
-<link
-  href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css"
-  rel="stylesheet"
-/>
+<link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet"/>
 ```
 
 ## Create a map
@@ -73,26 +70,17 @@ In the `HTML` we will render our map and for that we need a container `div` 
   <head>
     <title>My First Map</title>
     <script src="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
-    <link
-      href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css"
-      rel="stylesheet"
-    />
-    <style>
-      #map {
-        height: 500px;
-        width: 100%;
-      }
-    </style>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet"/>
   </head>
   <body>
     <h3>My First Map</h3>
-    <div id="map" style="width:400px;height:300px"></div>
+    <div id="map" style="width: 400px; height: 300px"></div>
     <script type="text/javascript" src="main.js"></script>
   </body>
 </html>
 ```
 
-And in our `main.js` we write the next code:
+And in our `main.js` we'll write the next code:
 
 ```javascript
 // main.js
@@ -112,7 +100,7 @@ Notice that we need to replace `YOUR-API-KEY` from `mapboxgl.accessToken` wi
 
 Basically, we are on top of two things here:
 
-1.  Create an instance of a `Map` which receives four parameters: the first one is the container (`document.getElementById('map')`) which only needs the id value not the selector, the second is stylesheet by default, we can let it like that. Next we have two more options - the position to center the map and the zoom level (if the center is present the zoom must be too).
+1.  Create an instance of a `Map` which receives four parameters: the first one is the container (`document.getElementById('map')`) which only needs the id value, not the selector; the second is the stylesheet by default, we can let it like that. Next we have two more options - the position to center the map and the zoom level (if the center is present the zoom must be too).
 
 2.  Set an array with [latitude](https://en.wikipedia.org/wiki/Latitude) and [longitude](https://en.wikipedia.org/wiki/Longitude) to point the map to a specific place (in our case IronhackMEX), and center it with the key `center`. 
 
@@ -151,15 +139,17 @@ const marker = new mapboxgl.Marker()
     const time = Date.now()
     const radius = 20
     marker.setLngLat([
-        -99 + Math.sin(time/10000 * radius),
-        19 + Math.cos(time/10000 * radius)
+      -99 + Math.sin(time / 10000 * radius),
+      19 + Math.cos(time / 10000 * radius)
     ]);
     marker.addTo(map);
   }
 
-  setInterval(changeMarker,1000/60)
+  setInterval(changeMarker, 1000/60)
 ```
-Make sure to zoom out to see the animation, Hey! our marker isn't boring anymore!
+Make sure to zoom out to see the animation.
+
+#### Hey! our marker isn't boring anymore!
 
 ![Imgur](https://i.imgur.com/IDZckSo.gif)
 
@@ -196,7 +186,6 @@ if (navigator.geolocation) {
   console.log('Browser does not support geolocation.');
 }
 ...
-
 ```
 
 ```javascript
@@ -206,7 +195,6 @@ center:
     -99.1711, 
     19.3990 
   ]
-
 ```
 
 Now let's add a marker with our current position and center the map in the marker. Also, we are going to put a marker in Ironhack Barcelona Campus!
@@ -218,13 +206,13 @@ function startMap() {
   const ironhackMEX = [ -99.1711, 19.3990 ];
 
   // Initialize the map
- mapboxgl.accessToken = "<YOUR-API-KEY>";
-const map = new mapboxgl.Map({
-  container: "map",
-  style: "mapbox://styles/mapbox/streets-v10",
-  center: ironhackMEX,
-  zoom: 15
-});
+  mapboxgl.accessToken = "<YOUR-API-KEY>";
+  const map = new mapboxgl.Map({
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v10",
+    center: ironhackMEX,
+    zoom: 15
+  });
 
   // Add a marker for Ironhack México
   const IronhackMEXMarker = new mapboxgl.Marker()
@@ -242,9 +230,9 @@ const map = new mapboxgl.Map({
       map.setCenter(user_location);
 
       // Add a marker for your user location
-      const userLocationMarker = new mapboxgl.Marker({color:"red"})
-    .setLngLat(user_location)
-    .addTo(map);
+      const userLocationMarker = new mapboxgl.Marker({ color: "red" })
+        .setLngLat(user_location)
+        .addTo(map);
 
     }, function () {
       console.log('Error in the geolocation service.');
@@ -255,25 +243,23 @@ const map = new mapboxgl.Map({
 }
 
 startMap();
-
 ```
 
 ## Drawing a route between two pins
 
 ![Imgur](https://i.imgur.com/9uBhP6f.jpg)
 
-If we want to draw routes between two pins we have to add this piece of code at the end, and set the corresponding libraries links in the `head` tag.
+If we want to draw routes between two pins we have to add this piece of code at the end, and set the corresponding libraries links in the `<head>` tag.
 
 ```javascript
 map.addControl(new MapboxDirections({
-    accessToken: mapboxgl.accessToken
+  accessToken: mapboxgl.accessToken
 }), 'top-left');
-
 ```
 
 To specify the route that we want to do, we just have to use the input boxes provided from the map.
 
-Do not forget to import the apropiate stylesheet and JavaScript library at the `<head></head>` tag:
+Do not forget to import the apropiate stylesheet and JavaScript library at the `<head>` tag:
 
 ```html
   <head>
